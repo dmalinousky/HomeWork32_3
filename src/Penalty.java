@@ -1,6 +1,7 @@
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Penalty {
+public class Penalty extends ArrayList {
     private PenaltyType type;
     private double size;
     private Date date;

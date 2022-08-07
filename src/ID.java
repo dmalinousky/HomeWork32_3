@@ -1,38 +1,27 @@
 import java.util.Arrays;
-import java.util.Locale;
+import java.util.Objects;
 
 public class ID {
-    private String IDnumber;
-    private static long additionalNumber = 0;
+    private long IDnumber;
 
-    public ID(String IDnumber, long number) {
+    public ID(long IDnumber) {
         this.IDnumber = IDnumber;
-        this.additionalNumber = number;
     }
 
-    public ID() {}
+    public ID() {
+    }
 
-    public String getIDnumber() {
+    public long getIDnumber() {
         return IDnumber;
     }
 
-    public void setIDnumber(String IDnumber) {
+    public void setIDnumber(long IDnumber) {
         this.IDnumber = IDnumber;
-    }
-
-    public long getAdditionalNumber() {
-        return additionalNumber;
-    }
-
-    public void setAdditionalNumber(long number) {
-        this.additionalNumber = number;
     }
 
     public static ID IDgenerator(TaxPayer taxPayer) {
         ID id = new ID();
-        String tempName = Arrays.deepToString(taxPayer.getName()).replace("[", "").replace("]", "").replace(", ", "").toLowerCase();
-        id.setIDnumber(tempName + id.getAdditionalNumber());
-        additionalNumber++;
+        id.setIDnumber(taxPayer.hashCode());
         return id;
     }
 
@@ -41,5 +30,18 @@ public class ID {
         return "\nID{" +
                 "IDnumber='" + IDnumber + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ID)) return false;
+        ID id = (ID) o;
+        return IDnumber == id.IDnumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(IDnumber);
     }
 }
